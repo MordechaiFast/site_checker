@@ -8,6 +8,7 @@ def site_online(url, timeout=2) -> bool:
     """
     parser = urlparse(url)
     host = parser.netloc or parser.path.split('/')[0]
+    error = None
     for port in (80, 443):
         connection = HTTPConnection(host=host, port=port, timeout=timeout)
         try:
@@ -17,4 +18,5 @@ def site_online(url, timeout=2) -> bool:
             error = err
         finally:
             connection.close()
-    raise error
+    if error:
+        raise error
