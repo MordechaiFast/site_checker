@@ -1,5 +1,7 @@
+from pathlib import Path
 from .cli import display_result, parse_args
 import sys
+
 
 def main():
     args = parse_args(sys.argv[1:])
@@ -11,8 +13,16 @@ def main():
         display_result(url)
 
 def build_list(args) -> list:
-    urls = args.urls
-    # add urls from a file
+    return args.urls + read_file(args.file)
+
+def read_file(file) -> list:
+    if not Path(file).is_file():
+        print(f'Can\'t find file "{file}".')
+        return []
+    with open(file) as file:
+        urls = [url.strip() for url in file]
+    """ except OSError as err:
+        print(f'Can\'t read from file "{file}" :(', err) """
     return urls
 
 if __name__ == '__main__': main()
