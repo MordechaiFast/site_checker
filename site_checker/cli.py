@@ -1,5 +1,4 @@
 from argparse import ArgumentParser, Namespace
-from typing import List
 from .checker import site_online
 
 

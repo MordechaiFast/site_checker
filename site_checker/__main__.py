@@ -3,8 +3,8 @@ from .cli import display_result, parse_args
 import sys
 
 
-def main():
-    args = parse_args(sys.argv[1:])
+def main(args):
+    args = parse_args(args)
     urls = build_list(args)
     if not urls:
         print('No sites entered. See help.')
@@ -13,7 +13,10 @@ def main():
         display_result(url)
 
 def build_list(args) -> list:
-    return args.urls + read_file(args.file)
+    urls = args.urls
+    if args.file:
+        urls += read_file(args.file)
+    return urls
 
 def read_file(file) -> list:
     if not Path(file).is_file():
@@ -25,4 +28,4 @@ def read_file(file) -> list:
         print(f'Can\'t read from file "{file}" :(', err) """
     return urls
 
-if __name__ == '__main__': main()
+if __name__ == '__main__': main(sys.argv[1:])
