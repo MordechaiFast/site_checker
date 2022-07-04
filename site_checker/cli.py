@@ -1,5 +1,4 @@
 from argparse import ArgumentParser, Namespace
-from .checker import site_online
 
 
 def parse_args(args: str) -> Namespace:
@@ -25,10 +24,6 @@ def parse_args(args: str) -> Namespace:
     )
     return parser.parse_args(args)
 
-def display_result(url) -> None:
-    print(f'The site "{url}" is:', end=' ')
-    try:
-        if site_online(url):
-            print('online!')
-    except Exception as err:
-        print('not accessable:', err)
+def display_result(url: str, online: bool, err: Exception = None) -> None:
+    print(f'The site "{url}" is:', 'online!' 
+            if online else 'not accessable: ' + str(err))

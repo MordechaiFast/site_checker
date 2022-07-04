@@ -1,2 +1,3 @@
 env/
 site_checker/__pycache__/
+__pycache__/concurrent.cpython-310.pyc

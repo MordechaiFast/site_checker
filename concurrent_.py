@@ -1,9 +1,7 @@
-import asyncio
+from site_checker.cli import parse_args, display_result
 from pathlib import Path
-from urllib.parse import urlparse
-from site_checker.cli import parse_args
+import asyncio
 import sys
-import aiohttp
 
 
 def main(args):
@@ -40,6 +38,9 @@ async def asynchronous_check(urls):
     
     await asyncio.gather(*(check(url) for url in urls))
 
+from urllib.parse import urlparse
+import aiohttp
+
 async def site_online(url, timeout=2) -> bool:
     """Returns True if the target url is online.
     
@@ -58,9 +59,5 @@ async def site_online(url, timeout=2) -> bool:
                 error = err
     if error:
         raise error
-
-def display_result(url: str, online: bool, err: Exception = None) -> None:
-    print(f'The site "{url}" is:', 'online!' 
-            if online else 'not accessable: ' + str(err))
 
 if __name__ == '__main__': main(sys.argv[1:])
